@@ -1,0 +1,21 @@
+services:
+  db:
+    container_name: flask_mysqldb
+    image: mysql:8.1
+    ports:
+      - '3307:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=flask_user_db
+      - MYSQL_USER=user123
+      - MYSQL_PASSWORD=password
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppassword" ]
+      interval: 1s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - flask_db:/var/lib/mysql
+
+volumes:
+  flask_db:
